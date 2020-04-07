@@ -22,21 +22,15 @@ class BookDetails extends React.Component {
       purchased: true,
     };
   }
-  componentDidMount() {
-    // Get Book Data first
-    axios
-      .get("http://localhost:3002/api/books/" + this.state.id)
-      .then(async (res) => {
-        this.setState({
-          book: res.data,
-        });
-        // After Book Data retrieved, retrieve the comments for that book
-        try {
-          await this.getComments();
-        } catch (err) {
-          console.log("Comments error", err);
-        }
-      });
+  async componentDidMount() {
+    try {
+      // Get Book Data first
+      await this.getBook();
+      // After Book Data retrieved, retrieve the comments for that book
+      await this.getComments();
+    } catch (err) {
+      console.log("Data retrieving", err);
+    }
   }
 
   async getComments() {
@@ -48,11 +42,20 @@ class BookDetails extends React.Component {
       (comment) => comment.discussion_id === this.state.id
     );
     this.setState({ ...this.state, comments: filteredComments });
+    await this.calculateAvgRating();
+  }
+
+  async getBook() {
+    const book = await axios.get(
+      "http://localhost:3002/api/books/" + this.state.id
+    );
+    this.setState({
+      book: book.data,
+    });
   }
 
   handleSubmitReview = ({ mname, text, rating }) => {
     // Here add the axios method of sending a post request
-
     axios
       .post("http://localhost:3002/api/Comments", {
         text,
@@ -63,21 +66,29 @@ class BookDetails extends React.Component {
       .then(async () => {
         // Update the state when a new comment is posted
         await this.getComments();
+        await this.getBook();
       });
   };
 
-  calculateAvgRating = () => {
+  calculateAvgRating = async () => {
     const { comments } = this.state;
-    if (comments.length > 0) {
-      console.log("avg", comments);
-      const tComments = comments.length;
-      let sumOfReviews = 0;
-      comments.forEach((comment) => {
-        sumOfReviews = sumOfReviews + comment.rating;
-      });
-      return sumOfReviews / tComments;
+    try {
+      if (comments.length > 0) {
+        const tComments = comments.length;
+        let sumOfReviews = 0;
+        comments.forEach((comment) => {
+          sumOfReviews = sumOfReviews + comment.rating;
+        });
+        const avgRating = sumOfReviews / tComments;
+        // Updating the Averge Rating of a book
+        await axios.patch(
+          `http://localhost:3002/api/books/rate/book/${this.state.id}`,
+          { rating: avgRating }
+        );
+      }
+    } catch (err) {
+      console.log(err.message);
     }
-    return 0;
   };
 
   handleAddToWishList = (id) => {
@@ -117,7 +128,11 @@ class BookDetails extends React.Component {
                   <StarRatings
                     starRatedColor="#FFCC00"
                     starDimension="25px"
-                    rating={this.calculateAvgRating()}
+                    rating={
+                      this.state.book.rating && this.state.book.rating !== 0
+                        ? this.state.book.rating
+                        : 0
+                    }
                     numberOfStars={5}
                     name="rating"
                   />

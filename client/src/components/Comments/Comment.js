@@ -1,7 +1,7 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 export default function Comment(props) {
-  const { name, text, rating } = props.comment;
+  const { name, text, rating, posted } = props.comment;
   return (
     <>
       <div class="col-md-3 text-center">
@@ -28,7 +28,7 @@ export default function Comment(props) {
           />
         </p>
         <p class="review-text">{text}</p>
-        <small class="review-date">February 26, 2019</small>
+        <small class="review-date">{new Date(posted).toDateString()}</small>
       </div>
     </>
   );
