@@ -9,6 +9,8 @@ import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import axios from "axios";
 import CommentList from "../components/Comments/CommentList";
 
+import { connect } from "react-redux";
+import { addToWishList } from "../actions/wishlistActions";
 //class
 //will need this function when you call this class to get the id to call the book
 class BookDetails extends React.Component {
@@ -91,8 +93,8 @@ class BookDetails extends React.Component {
     }
   };
 
-  handleAddToWishList = (id) => {
-    console.log("Book id", id);
+  handleAddToWishList = () => {
+    this.props.addToWishList(this.state.book);
   };
 
   render() {
@@ -199,4 +201,8 @@ class BookDetails extends React.Component {
   }
 }
 
-export default BookDetails;
+const mapDipatchToProps = (dispatch) => ({
+  addToWishList: (book) => dispatch(addToWishList(book)),
+});
+
+export default connect(null, mapDipatchToProps)(BookDetails);

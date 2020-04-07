@@ -9,9 +9,10 @@ import BookDetails from "./pages/BookDetails";
 import Profile from "./pages/Profile";
 import Help from "./pages/Help";
 import ShopCart from "./pages/ShopCart";
-import WishListContext, { Provider } from "./context/WishListContext";
 import { Route, HashRouter, NavLink } from "react-router-dom";
-
+// React Redux
+import { Provider } from "react-redux";
+import store from "./store";
 // NPM RUN CLIENT is the updated src folder, (NPM RUN SERVER/NPM START) runs build in my case which is the old green template
 //Use ctrL + C to stop the server
 //Always run NPM INSTALL on a newly cloned file
@@ -23,7 +24,7 @@ import { Route, HashRouter, NavLink } from "react-router-dom";
 //npm npm run client to run this package
 
 const App = () => (
-  <Provider value={[]}>
+  <Provider store={store}>
     <HashRouter>
       <div>
         {/* Link TITLE with home Page*/}

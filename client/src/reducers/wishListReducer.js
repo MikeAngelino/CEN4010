@@ -9,6 +9,7 @@ const reducer = (state = initialState, action) => {
     case ADD_WISHLIST:
       return {
         ...state,
+        wishlists: [...state.wishlists, action.payload],
       };
       break;
     default:

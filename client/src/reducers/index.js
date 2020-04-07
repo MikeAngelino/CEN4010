@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import wishlistReducer from "./wishListReducter";
+import wishlistReducer from "./wishListReducer";
 const reducers = combineReducers({
-  wishlist: wishlistReducer,
+  wishLists: wishlistReducer,
 });
 
 export default reducers;

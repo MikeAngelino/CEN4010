@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "../index.css";
-
+import { connect } from "react-redux";
 class WishList extends Component {
   render() {
+    const { wishLists } = this.props;
     return (
       <div class="container">
         <div class="row">
@@ -20,47 +21,52 @@ class WishList extends Component {
           </div>
         </div>
         <div id="products" class="row view-group">
-          <div class="item col-xs-4 col-lg-4">
-            <div class="thumbnail card">
-              <div class="img-event">
-                <img
-                  class="group list-group-image img-fluid"
-                  src="http://placehold.it/400x250/000/fff"
-                  alt=""
-                />
-              </div>
-              <div class="caption card-body">
-                <h4 class="group card-title inner list-group-item-heading">
-                  Product title
-                </h4>
-                <p class="group inner list-group-item-text">
-                  Product description... Lorem ipsum dolor sit amet,
-                  consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                  tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                </p>
-                <div class="row">
-                  <div class="col-xs-12 col-md-6">
-                    <p class="lead">$21.000</p>
-                  </div>
-                  <div class="col-xs-12 col-md-6">
-                    <a
-                      class="btn btn-success"
-                      href="http://www.jquery2dotnet.com"
-                    >
-                      Add to cart
-                    </a>
+          {wishLists.map((wishList) => (
+            <div class="item col-xs-4 col-lg-4">
+              <div class="thumbnail card">
+                <div class="img-event">
+                  <img
+                    class="group list-group-image img-fluid"
+                    src={`${wishList.thumbnailUrl}`}
+                    alt=""
+                  />
+                </div>
+                <div class="caption card-body">
+                  <h4 class="group card-title inner list-group-item-heading">
+                    {wishList.title}
+                  </h4>
+                  <p class="group inner list-group-item-text">
+                    {wishList.shortDescription}
+                  </p>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <p class="lead">${wishList.price}</p>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <a
+                        class="btn btn-success"
+                        href="http://www.jquery2dotnet.com"
+                      >
+                        Add to cart
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     );
   }
 }
-
-export default WishList;
+const mapStateToProps = (state) => {
+  // console.log(state.wishLists.wishlists);
+  return {
+    wishLists: state.wishLists.wishlists,
+  };
+};
+export default connect(mapStateToProps)(WishList);
 
 {
   /* <div>
