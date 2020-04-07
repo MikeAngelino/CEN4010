@@ -3,7 +3,7 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 export default class Comments extends Component {
   state = {
-    description: "",
+    text: "",
     name: "",
     rating: 0,
     anonymous: false,
@@ -24,18 +24,20 @@ export default class Comments extends Component {
   resetForm = () => {
     this.setState({
       name: "",
-      description: "",
+      text: "",
       rating: 0,
       anonymous: false,
       fromProfile: false,
     });
+    this.refs.from_profile_check.checked = false;
+    this.refs.anonymous.checked = false;
   };
 
   render() {
     const { submit } = this.props;
     const {
       name,
-      description,
+      text,
       rating,
       anonymous,
       fromProfile,
@@ -50,12 +52,10 @@ export default class Comments extends Component {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              if (name !== "" && description !== "" && rating !== 0) {
-                // Check if Anonymous is set true or Check if name is needed from profile
-                const mname = this.checkName();
-                submit({ mname, description, rating });
-                this.resetForm();
-              }
+              // Check if Anonymous is set true or Check if name is needed from profile
+              const mname = this.checkName();
+              submit({ mname, text, rating });
+              this.resetForm();
             }}
           >
             {!anonymous && !fromProfile && (
@@ -74,9 +74,9 @@ export default class Comments extends Component {
               <Form.Label>Review</Form.Label>
               <Form.Control
                 as={"textarea"}
-                value={description}
+                value={text}
                 onChange={(e) =>
-                  this.setState({ ...this.state, description: e.target.value })
+                  this.setState({ ...this.state, text: e.target.value })
                 }
                 style={{ resize: "none" }}
                 rows={"8"}
@@ -100,26 +100,26 @@ export default class Comments extends Component {
               <Form.Check
                 style={{ padding: 0 }}
                 onChange={(e) => {
-                  this.setState({ ...this.state, anonymous: e.target.value });
+                  this.setState({ ...this.state, anonymous: !anonymous });
                 }}
                 label={"Comment anonymously"}
                 type="checkbox"
-                checked={anonymous}
+                ref={"anonymous"}
               />
             </Form.Group>
             {!isAuthenticated && (
               <Form.Group>
                 <Form.Check
                   style={{ padding: 0 }}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     this.setState({
                       ...this.state,
-                      fromProfile: e.target.value,
-                    })
-                  }
+                      fromProfile: !fromProfile,
+                    });
+                  }}
                   label={"Use profile nickname"}
-                  checked={fromProfile}
                   type="checkbox"
+                  ref={"from_profile_check"}
                 />
               </Form.Group>
             )}

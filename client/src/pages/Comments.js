@@ -4,7 +4,7 @@ import axios from "axios";
 import comInput from "./comInput";
 
 class Comments extends Component {
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     console.log();
 
@@ -15,7 +15,7 @@ class Comments extends Component {
   };
 
   state = {
-    comments: []
+    comments: [],
   };
 
   componentDidMount() {
@@ -25,25 +25,25 @@ class Comments extends Component {
   getComments = () => {
     axios
       .get("/api/comments")
-      .then(res => {
+      .then((res) => {
         if (res.data) {
           this.setState({
-            todos: res.data
+            todos: res.data,
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  deleteComments = id => {
+  deleteComments = (id) => {
     axios
       .delete(`/api/comments/${id}`)
-      .then(res => {
+      .then((res) => {
         if (res.data) {
           this.getTodos();
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   render() {

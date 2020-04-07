@@ -18,59 +18,66 @@ class BookDetails extends React.Component {
     this.state = {
       id: props.match.params.id,
       book: {},
-      comments: [
-        { id: 1, name: "Alex", description: "Loving this book!", rating: 4 },
-        {
-          id: 2,
-          name: "Betty",
-          description: "Needs to have some descent story line",
-          rating: 3,
-        },
-        { id: 3, name: "Mia", description: "This is my comment", rating: 4 },
-        { id: 4, name: "John", description: "Boring book", rating: 2 },
-      ],
+      comments: [],
       purchased: true,
     };
   }
   componentDidMount() {
+    // Get Book Data first
     axios
       .get("http://localhost:3002/api/books/" + this.state.id)
-      .then((res) => {
+      .then(async (res) => {
         this.setState({
           book: res.data,
         });
+        // After Book Data retrieved, retrieve the comments for that book
+        try {
+          await this.getComments();
+        } catch (err) {
+          console.log("Comments error", err);
+        }
       });
   }
 
-  handleSubmitReview = ({ mname, description, rating }) => {
-    // Here add the axios method of sending a post request
-    // For now I'm storing it in the state of the component
-    const { comments } = this.state;
-    // Assigning a static ID for now
-    const id = comments.length + 1;
+  async getComments() {
+    const comments = await axios.get(
+      "http://localhost:3002/api/Comments/Comments"
+    );
+    // Only get the comments associated with this book
+    const filteredComments = comments.data.filter(
+      (comment) => comment.discussion_id === this.state.id
+    );
+    this.setState({ ...this.state, comments: filteredComments });
+  }
 
-    this.setState({
-      comments: [
-        ...comments,
-        {
-          id: id,
-          name: mname,
-          description: description,
-          rating: rating,
-        },
-      ],
-    });
+  handleSubmitReview = ({ mname, text, rating }) => {
+    // Here add the axios method of sending a post request
+
+    axios
+      .post("http://localhost:3002/api/Comments", {
+        text,
+        rating,
+        name: mname,
+        discussion_id: this.state.id,
+      })
+      .then(async () => {
+        // Update the state when a new comment is posted
+        await this.getComments();
+      });
   };
 
   calculateAvgRating = () => {
     const { comments } = this.state;
-    const tComments = comments.length;
-    let sumOfReviews = 0;
-    comments.forEach((comment) => {
-      sumOfReviews = sumOfReviews + comment.rating;
-    });
-
-    return sumOfReviews / tComments;
+    if (comments.length > 0) {
+      console.log("avg", comments);
+      const tComments = comments.length;
+      let sumOfReviews = 0;
+      comments.forEach((comment) => {
+        sumOfReviews = sumOfReviews + comment.rating;
+      });
+      return sumOfReviews / tComments;
+    }
+    return 0;
   };
 
   handleAddToWishList = (id) => {
