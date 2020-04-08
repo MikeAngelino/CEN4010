@@ -58,6 +58,33 @@ export default class Comments extends Component {
               this.resetForm();
             }}
           >
+            <Form.Group>
+              <Form.Check
+                style={{ padding: 0 }}
+                onChange={(e) => {
+                  this.setState({ ...this.state, anonymous: !anonymous });
+                }}
+                label={"Comment anonymously"}
+                type="checkbox"
+                ref={"anonymous"}
+              />
+            </Form.Group>
+            {!isAuthenticated && (
+              <Form.Group>
+                <Form.Check
+                  style={{ padding: 0 }}
+                  onChange={(e) => {
+                    this.setState({
+                      ...this.state,
+                      fromProfile: !fromProfile,
+                    });
+                  }}
+                  label={"Use profile nickname"}
+                  type="checkbox"
+                  ref={"from_profile_check"}
+                />
+              </Form.Group>
+            )}
             {!anonymous && !fromProfile && (
               <Form.Group>
                 <Form.Label>Nickname</Form.Label>
@@ -96,33 +123,7 @@ export default class Comments extends Component {
                 name="rating"
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Check
-                style={{ padding: 0 }}
-                onChange={(e) => {
-                  this.setState({ ...this.state, anonymous: !anonymous });
-                }}
-                label={"Comment anonymously"}
-                type="checkbox"
-                ref={"anonymous"}
-              />
-            </Form.Group>
-            {!isAuthenticated && (
-              <Form.Group>
-                <Form.Check
-                  style={{ padding: 0 }}
-                  onChange={(e) => {
-                    this.setState({
-                      ...this.state,
-                      fromProfile: !fromProfile,
-                    });
-                  }}
-                  label={"Use profile nickname"}
-                  type="checkbox"
-                  ref={"from_profile_check"}
-                />
-              </Form.Group>
-            )}
+
             <Form.Group>
               <Button
                 type={"submit"}
