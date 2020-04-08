@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
+import { getWishLists } from "../actions/wishlistActions";
 
 class Home extends React.Component {
   constructor(props) {
@@ -11,12 +13,17 @@ class Home extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     axios.get("http://localhost:3002/api/books").then((res) => {
       this.setState({
         books: res.data,
       });
     });
+    try {
+      await this.props.getWishLists();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -44,5 +51,7 @@ class Home extends React.Component {
     );
   }
 }
-
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+  return { getWishLists: () => dispatch(getWishLists()) };
+};
+export default connect(null, mapDispatchToProps)(Home);

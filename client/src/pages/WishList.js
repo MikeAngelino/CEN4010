@@ -20,31 +20,32 @@ class WishList extends Component {
             </div>
           </div>
         </div>
-        <div id="products" class="row view-group">
-          {wishLists.map((wishList) => (
-            <div class="item col-xs-4 col-lg-4">
-              <div class="thumbnail card">
-                <div class="img-event">
-                  <img
-                    class="group list-group-image img-fluid"
-                    src={`${wishList.thumbnailUrl}`}
-                    alt=""
-                  />
-                </div>
-                <div class="caption card-body">
-                  <h4 class="group card-title inner list-group-item-heading">
-                    {wishList.title}
-                  </h4>
-                  <p class="group inner list-group-item-text">
-                    {wishList.shortDescription}
-                  </p>
-                  <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                      <p class="lead">${wishList.price}</p>
+        {wishLists.map((wishList) => (
+          <div id="products" key={wishList._id} class="row view-group mb-5">
+            <div class="item col-xs-12 col-lg-12">
+              <div class="card">
+                <div className="row">
+                  <div className="col-lg-4 col-md-4 col-xs-4">
+                    <div class="img-event">
+                      <img
+                        style={{ height: "343px" }}
+                        class="img img-fluid"
+                        src={`${wishList.thumbnailUrl}`}
+                        alt=""
+                      />
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-xs-8 d-flex align-items-center">
+                    <div class="caption card-body">
+                      <h4 class="group card-title inner list-group-item-heading">
+                        {wishList.title}
+                      </h4>
+                      <p class="group inner list-group-item-text">
+                        {wishList.shortDescription}
+                      </p>
+                      <p class="lead float-left mt-4">${wishList.price}</p>
                       <a
-                        class="btn btn-success"
+                        class="btn btn-success float-right mt-4"
                         href="http://www.jquery2dotnet.com"
                       >
                         Add to cart
@@ -54,8 +55,8 @@ class WishList extends Component {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -66,6 +67,7 @@ const mapStateToProps = (state) => {
     wishLists: state.wishLists.wishlists,
   };
 };
+
 export default connect(mapStateToProps)(WishList);
 
 {

@@ -1,4 +1,4 @@
-import { ADD_WISHLIST } from "../actions/types";
+import { ADD_WISHLIST, GET_WISHLIST } from "../actions/types";
 
 const initialState = {
   wishlists: [],
@@ -6,6 +6,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_WISHLIST: {
+      return {
+        ...state,
+        wishlists: action.payload,
+      };
+    }
     case ADD_WISHLIST:
       return {
         ...state,
