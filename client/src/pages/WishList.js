@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../index.css";
 import { connect } from "react-redux";
 import { getWishLists, deleteWishList } from "../actions/wishlistActions";
+import { addToCart } from "../actions/cartAction";
 class WishList extends Component {
   async componentDidMount() {
     try {
@@ -11,7 +12,7 @@ class WishList extends Component {
     }
   }
   render() {
-    const { wishLists } = this.props;
+    const { wishLists, addToCart } = this.props;
     return (
       <div class="container">
         {/* <div class="row">
@@ -53,12 +54,14 @@ class WishList extends Component {
                       </p>
                       <p class="lead float-left mt-4">${wishList.price}</p>
                       <p className="float-right mt-4">
-                        <a
+                        <button
                           class="btn btn-success"
-                          href="http://www.jquery2dotnet.com"
+                          onClick={async () => {
+                            await addToCart(wishList);
+                          }}
                         >
                           Add to cart
-                        </a>
+                        </button>
                         <button
                           className="btn btn-danger"
                           onClick={async () => {
@@ -86,12 +89,14 @@ const mapStateToProps = (state) => {
   // console.log(state.wishLists.wishlists);
   return {
     wishLists: state.wishLists.wishlists,
+    carts: state.carts.carts,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getWishLists: () => dispatch(getWishLists()),
     deleteWishList: (id) => dispatch(deleteWishList(id)),
+    addToCart: (data) => dispatch(addToCart(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(WishList);

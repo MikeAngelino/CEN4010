@@ -11,6 +11,7 @@ import CommentList from "../components/Comments/CommentList";
 
 import { connect } from "react-redux";
 import { addToWishList } from "../actions/wishlistActions";
+import { addToCart } from "../actions/cartAction";
 //class
 //will need this function when you call this class to get the id to call the book
 class BookDetails extends React.Component {
@@ -94,6 +95,10 @@ class BookDetails extends React.Component {
     }
   };
 
+  handleAddToCart = async () => {
+    await this.props.addToCart(this.state.book);
+  };
+
   handleAddToWishList = async () => {
     const status = await this.props.addToWishList(this.state.book);
     if (status === 0) {
@@ -160,7 +165,12 @@ class BookDetails extends React.Component {
 
             <Row className="details-buttons">
               <Col className="addtoCartBtn" xs={6}>
-                <Button variant="primary" size="sm" block>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={this.handleAddToCart}
+                  block
+                >
                   ADD TO CART
                 </Button>
               </Col>
@@ -228,6 +238,7 @@ class BookDetails extends React.Component {
 
 const mapDipatchToProps = (dispatch) => ({
   addToWishList: (book) => dispatch(addToWishList(book)),
+  addToCart: (book) => dispatch(addToCart(book)),
 });
 
 export default connect(null, mapDipatchToProps)(BookDetails);
