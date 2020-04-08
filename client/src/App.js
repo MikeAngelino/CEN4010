@@ -18,7 +18,7 @@ import { Route, HashRouter, NavLink } from 'react-router-dom';
 //Do not push updates to master branch, push to your own branch PLZ
 
 //updated file structure on my branch (miguel) 2/17/20
-//npm install after downloading/ npm install --save react-bootstrap mighe be needed for BookDetails to work
+//npm install after downloading/ npm install --save react-bootstrap might be needed for BookDetails to work
 // npm install react-router-dom --save to fix initial error
 //npm npm run client to run this package
 
@@ -31,7 +31,6 @@ const App = () => (
 					<i class="material-icons">menu_book</i> GeekText
 				</h1>
 			</NavLink>
-
 			{/* styles this section with css*/}
 			<ul className="header">
 				<li>
@@ -39,7 +38,7 @@ const App = () => (
 						Home
 					</NavLink>
 				</li>
-
+				
 				{/* search bar*/}
 				<input type="text" />
 				<button type="submit">Submit</button>
@@ -48,17 +47,12 @@ const App = () => (
 				{/* <input onchange={this.props.handleSearch} type="text"/>
          		 <button type="submit">Submit</button> */}
 
-
  				<li><NavLink to="/Library">Library</NavLink></li>
-
-
           		<li><NavLink to="/WishList">Wish List</NavLink></li>
 		  		{/* <li><NavLink to="/BookDetails">Book Details</NavLink></li> */}
-
           		<li><NavLink to="/Login">Login</NavLink></li>
-		  		<li><NavLink to="/Profile">Profile</NavLink></li>
+		  		<li><NavLink to="/Profile">Profile </NavLink></li>
 				<li><NavLink to="/Help">Help</NavLink></li>
-
 				<li>
 					<NavLink to="/ShopCart">
 						<i class="material-icons md-dark md-24">shopping_cart</i>

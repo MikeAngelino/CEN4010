@@ -10,7 +10,7 @@ router.get('/Comments', (req, res, next) => {
     .catch(next)
 });
 
-router.post('/', (req, res, next) => {
+router.post('/Comments', (req, res, next) => {
         
     comments.create(req.body)
       .then(data => res.json(data))
@@ -30,4 +30,9 @@ router.delete('/Comments/:id', (req, res, next) => {
 })
 
 module.exports = router;
+
+
+
+
+
 
