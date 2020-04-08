@@ -34,7 +34,7 @@ app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/Comments", require("./routes/api/Comments"));
 app.use("/api/wishlists", require("./routes/api/wishlist"));
-
+app.use("/api/carts", require("./routes/api/cart"));
 // Port for DB
 const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`Server started on ${port}`));

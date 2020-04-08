@@ -22,6 +22,7 @@ class BookDetails extends React.Component {
       book: {},
       comments: [],
       purchased: true,
+      errorMessage: "",
     };
   }
   async componentDidMount() {
@@ -93,8 +94,23 @@ class BookDetails extends React.Component {
     }
   };
 
-  handleAddToWishList = () => {
-    this.props.addToWishList(this.state.book);
+  handleAddToWishList = async () => {
+    const status = await this.props.addToWishList(this.state.book);
+    if (status === 0) {
+      this.setState({
+        ...this.state,
+        errorMessage: "This Book is already in your Wish List",
+      });
+      // Remove the error message after N seconds
+      setTimeout(
+        () =>
+          this.setState({
+            ...this.state,
+            errorMessage: "",
+          }),
+        3000
+      );
+    }
   };
 
   render() {
@@ -160,6 +176,15 @@ class BookDetails extends React.Component {
                 </Button>
               </Col>
             </Row>
+            {this.state.errorMessage && (
+              <Row>
+                <Col xs={"12"} lg={"12"} md={"12"}>
+                  <p className="text-danger mt-4 text-center">
+                    {this.state.errorMessage}
+                  </p>
+                </Col>
+              </Row>
+            )}
           </Col>
         </Row>
 

@@ -23,28 +23,40 @@ router.get("/:id", (req, res) => {
 // @access Public
 router.post("/", (req, res) => {
   const { data, userId } = req.body;
-  //   Add or modify the wishlist of the user
-  WishList.update(
-    { userId },
-    {
-      $push: {
-        products: data,
-      },
-    },
-    {
-      upsert: true,
-    }
-  )
-    .then(() => res.json({ success: 1 }))
-    .catch((err) => res.json({ success: 0, message: err.message }));
+  WishList.findOne({
+    userId,
+    products: { $elemMatch: { _id: data._id } },
+  }).then((wishlist) => {
+    console.log(wishlist);
+    if (!wishlist) {
+      //   Add or modify the wishlist of the user
+      WishList.update(
+        { userId },
+        {
+          $push: {
+            products: data,
+          },
+        },
+        {
+          upsert: true,
+        }
+      )
+        .then(() => res.json({ success: 1 }))
+        .catch((err) => res.json({ success: 0, message: err.message }));
+    } else
+      res.json({
+        success: 0,
+        message: "The product already exists in the wishlist",
+      });
+  });
 });
 
-// @route DELETE api/wishlist/:id
+// @route DELETE api/wishlist/:userId/:id
 // @desc DELETE the wishlist within the database
 // @access Public
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  WishList.findByIdAndDelete(id)
+router.delete("/:userId/:id", (req, res) => {
+  const { id, userId } = req.params;
+  WishList.update({ userId }, { $pull: { products: { _id: id } } })
     .then(() => res.json({ success: 1 }))
     .catch((err) => res.json({ success: 0, message: err.message }));
 });

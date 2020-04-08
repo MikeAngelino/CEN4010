@@ -1,4 +1,4 @@
-import { ADD_WISHLIST, GET_WISHLIST } from "../actions/types";
+import { ADD_WISHLIST, GET_WISHLIST, DELETE_WISHLIST } from "../actions/types";
 
 const initialState = {
   wishlists: [],
@@ -17,7 +17,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         wishlists: [...state.wishlists, action.payload],
       };
-      break;
+    case DELETE_WISHLIST:
+      console.log(action.payload);
+      return {
+        ...state,
+      };
     default:
       return state;
   }

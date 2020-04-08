@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getWishLists } from "../actions/wishlistActions";
 
 class Home extends React.Component {
   constructor(props) {
@@ -19,11 +18,6 @@ class Home extends React.Component {
         books: res.data,
       });
     });
-    try {
-      await this.props.getWishLists();
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   render() {
@@ -51,7 +45,4 @@ class Home extends React.Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return { getWishLists: () => dispatch(getWishLists()) };
-};
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null)(Home);
