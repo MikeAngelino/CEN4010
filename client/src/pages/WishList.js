@@ -34,17 +34,16 @@ class WishList extends Component {
             <div class="item col-xs-12 col-lg-12">
               <div class="card">
                 <div className="row">
-                  <div className="col-lg-4 col-md-4 col-xs-4">
+                  <div className="col-lg-2 col-md-2 col-xs-2">
                     <div class="img-event">
                       <img
-                        style={{ height: "343px" }}
                         class="img img-fluid"
                         src={`${wishList.thumbnailUrl}`}
                         alt=""
                       />
                     </div>
                   </div>
-                  <div className="col-lg-8 col-md-8 col-xs-8 d-flex align-items-center">
+                  <div className="col-lg-10 col-md-10 col-xs-10 d-flex align-items-center">
                     <div class="caption card-body">
                       <h4 class="group card-title inner list-group-item-heading">
                         {wishList.title}

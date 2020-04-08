@@ -74,6 +74,7 @@ class BookDetails extends React.Component {
       });
   };
 
+  // This method calculates the Average Rating
   calculateAvgRating = async () => {
     const { comments } = this.state;
     try {

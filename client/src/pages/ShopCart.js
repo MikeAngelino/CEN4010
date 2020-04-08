@@ -58,7 +58,11 @@ class ShopCart extends React.Component {
           carts.map((cart) => {
             console.log(cart);
             return (
-              <Row key={cart._id}>
+              <Row
+                className="mb-4"
+                style={{ border: "4px solid black" }}
+                key={cart._id}
+              >
                 <div className="cart-wrapper">
                   <Row>
                     <Col xs={"12"} md={"12"} lg={"12"}>
@@ -100,7 +104,7 @@ class ShopCart extends React.Component {
             );
           })}
 
-        <div>
+        <div style={{ borderTop: "4px solid black" }}>
           <p class="total">Total Price: ${this.calculateTotalPrice()}</p>
         </div>
       </Container>

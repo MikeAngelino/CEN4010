@@ -85,6 +85,20 @@ export default class Comments extends Component {
                 />
               </Form.Group>
             )}
+            <Form.Group>
+              <Form.Label style={{ display: "block" }}>Rating</Form.Label>
+              <StarRatings
+                starRatedColor="#FFCC00"
+                starHoverColor="#FFCC00"
+                starDimension="25px"
+                rating={rating}
+                changeRating={(rate) =>
+                  this.setState({ ...this.state, rating: rate })
+                }
+                numberOfStars={5}
+                name="rating"
+              />
+            </Form.Group>
             {!anonymous && !fromProfile && (
               <Form.Group>
                 <Form.Label>Nickname</Form.Label>
@@ -108,20 +122,6 @@ export default class Comments extends Component {
                 style={{ resize: "none" }}
                 rows={"8"}
               ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label style={{ display: "block" }}>Rating</Form.Label>
-              <StarRatings
-                starRatedColor="#FFCC00"
-                starHoverColor="#FFCC00"
-                starDimension="25px"
-                rating={rating}
-                changeRating={(rate) =>
-                  this.setState({ ...this.state, rating: rate })
-                }
-                numberOfStars={5}
-                name="rating"
-              />
             </Form.Group>
 
             <Form.Group>
