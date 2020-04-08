@@ -2,7 +2,8 @@ import React, { Component } from "react";
 //import { Container } from "react-bootstrap/lib/Tab";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getCartItems } from "../actions/cartAction";
+import { addToWishList } from "../actions/wishlistActions";
+import { getCartItems, deleteCartItem } from "../actions/cartAction";
 const api = require("axios");
 
 class ShopCart extends React.Component {
@@ -45,7 +46,7 @@ class ShopCart extends React.Component {
   }
 
   render() {
-    const { carts } = this.props;
+    const { carts, deleteCartItem, getCartItems, addToWishList } = this.props;
     return (
       <Container className="cartDetails">
         <Row>
@@ -56,7 +57,6 @@ class ShopCart extends React.Component {
 
         {carts.length > 0 &&
           carts.map((cart) => {
-            console.log(cart);
             return (
               <Row
                 className="mb-4"
@@ -76,13 +76,28 @@ class ShopCart extends React.Component {
                   </Row>
                   <Row className="details-buttons mt-4">
                     <div className="addtoCartBtn" xs={6}>
-                      <Button variant="outline-secondary" size="lg" block>
+                      <Button
+                        variant="outline-secondary"
+                        size="lg"
+                        block
+                        onClick={async () => {
+                          await deleteCartItem(cart._id);
+                          await getCartItems();
+                        }}
+                      >
                         REMOVE FROM CART
                       </Button>
                     </div>
 
                     <div className="addtoWishlistBtn" xs={6}>
-                      <Button variant="outline-secondary" size="lg" block>
+                      <Button
+                        variant="outline-secondary"
+                        size="lg"
+                        block
+                        onClick={async () => {
+                          await addToWishList(cart);
+                        }}
+                      >
                         ADD TO WISHLIST
                       </Button>
                     </div>
@@ -118,6 +133,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCartItems: () => dispatch(getCartItems()),
+  deleteCartItem: (id) => dispatch(deleteCartItem(id)),
+  addToWishList: (data) => dispatch(addToWishList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopCart);

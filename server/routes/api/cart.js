@@ -21,20 +21,31 @@ router.get("/:id", (req, res) => {
 // @access Public
 router.post("/", (req, res) => {
   const { data, userId } = req.body;
-  Cart.update(
-    { userId },
-    { $push: { products: data } },
-    {
-      upsert: true,
-    }
-  )
-    .then((data) => {
-      res.json({ success: 1, data });
-    })
-    .catch((err) => res.json({ success: 0, message: err.message }));
+  Cart.findOne({
+    userId,
+    products: { $elemMatch: { _id: data._id } },
+  }).then((cart) => {
+    if (!cart) {
+      Cart.update(
+        { userId },
+        { $push: { products: data } },
+        {
+          upsert: true,
+        }
+      )
+        .then((data) => {
+          res.json({ success: 1, data });
+        })
+        .catch((err) => res.json({ success: 0, message: err.message }));
+    } else
+      res.json({
+        success: 0,
+        message: "The product already exists in the wishlist",
+      });
+  });
 });
 
-// @route DELETE api/Cart/:userId/:id
+// @route DELETE api/carts/:userId/:id
 // @desc DELETE the Cart within the database
 // @access Public
 router.delete("/:userId/:id", (req, res) => {

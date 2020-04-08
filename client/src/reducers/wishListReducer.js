@@ -18,7 +18,6 @@ const reducer = (state = initialState, action) => {
         wishlists: [...state.wishlists, action.payload],
       };
     case DELETE_WISHLIST:
-      console.log(action.payload);
       return {
         ...state,
       };
