@@ -16,8 +16,8 @@ class WishList extends Component {
     return (
       <div class="container">
         <div class="row">
-          <div class="col-lg-12 my-3">
-            <h1 className="text-center py-5">Wish List</h1>
+          <div class="col-lg-12">
+            <h1>Wish List</h1>
           </div>
         </div>
         {wishLists.map((wishList) => (
