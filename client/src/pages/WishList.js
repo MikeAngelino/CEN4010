@@ -15,20 +15,11 @@ class WishList extends Component {
     const { wishLists, addToCart } = this.props;
     return (
       <div class="container">
-        {/* <div class="row">
+        <div class="row">
           <div class="col-lg-12 my-3">
-            <div class="pull-right">
-              <div class="btn-group">
-                <button class="btn btn-info" id="list">
-                  List View
-                </button>
-                <button class="btn btn-danger" id="grid">
-                  Grid View
-                </button>
-              </div>
-            </div>
+            <h1 className="text-center py-5">Wish List</h1>
           </div>
-        </div> */}
+        </div>
         {wishLists.map((wishList) => (
           <div id="products" key={wishList._id} class="row view-group mb-5">
             <div class="item col-xs-12 col-lg-12">

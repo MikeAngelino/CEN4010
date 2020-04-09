@@ -58,68 +58,74 @@ class ShopCart extends React.Component {
         {carts.length > 0 &&
           carts.map((cart) => {
             return (
-              <Row
-                className="mb-4"
-                style={{ border: "4px solid black" }}
-                key={cart._id}
-              >
-                <div className="cart-wrapper">
+              <Row className="mb-4 card" key={cart._id}>
+                <Col xs={"12"} lg={"12"} md="12" className="cart-wrapper">
                   <Row>
-                    <Col xs={"12"} md={"12"} lg={"12"}>
-                      <div className="cartbox-item cartbox-item-1">
-                        <img
-                          className="cartImage-container"
-                          src={cart.thumbnailUrl}
-                        />
+                    <Col xs={"2"} md={"2"} lg={"2"}>
+                      <img className="img img-fluid" src={cart.thumbnailUrl} />
+                    </Col>
+                    <Col xs={"10"} md={"10"} lg={"10"}>
+                      <div class="caption card-body">
+                        <h4 class="group card-title inner list-group-item-heading">
+                          {cart.title}
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                          {cart.shortDescription}
+                        </p>
+                        <p class="lead float-left mt-4">Price ${cart.price}</p>
                       </div>
                     </Col>
                   </Row>
-                  <Row className="details-buttons mt-4">
-                    <div className="addtoCartBtn" xs={6}>
-                      <Button
-                        variant="outline-secondary"
-                        size="lg"
-                        block
-                        onClick={async () => {
-                          await deleteCartItem(cart._id);
-                          await getCartItems();
-                        }}
-                      >
-                        REMOVE FROM CART
-                      </Button>
-                    </div>
+                  <Row>
+                    <Col lg={"12"} xs={"12"} md={"12"}>
+                      <div className="details-buttons btn-group float-right">
+                        <div className="addtoCartBtn" xs={6}>
+                          <Button
+                            variant="outline-secondary"
+                            size="lg"
+                            block
+                            onClick={async () => {
+                              await deleteCartItem(cart._id);
+                              await getCartItems();
+                            }}
+                          >
+                            REMOVE FROM CART
+                          </Button>
+                        </div>
 
-                    <div className="addtoWishlistBtn" xs={6}>
-                      <Button
-                        variant="outline-secondary"
-                        size="lg"
-                        block
-                        onClick={async () => {
-                          await addToWishList(cart);
-                        }}
-                      >
-                        ADD TO WISHLIST
-                      </Button>
-                    </div>
+                        <div className="addtoWishlistBtn" xs={6}>
+                          <Button
+                            variant="outline-secondary"
+                            size="lg"
+                            block
+                            onClick={async () => {
+                              await addToWishList(cart);
+                            }}
+                          >
+                            ADD TO WISHLIST
+                          </Button>
+                        </div>
 
-                    <div className="addtoWishlistBtn" xs={6}>
-                      <Button variant="outline-secondary" size="lg" block>
-                        UPDATE QUANTITY
-                      </Button>
-                    </div>
+                        <div className="addtoWishlistBtn" xs={6}>
+                          <Button variant="outline-secondary" size="lg" block>
+                            UPDATE QUANTITY
+                          </Button>
+                        </div>
 
-                    <div className="addtoWishlistBtn" xs={6}>
-                      <Button variant="outline-secondary" size="lg" block>
-                        SAVE FOR LATER
-                      </Button>
-                    </div>
+                        <div className="addtoWishlistBtn" xs={6}>
+                          <Button variant="outline-secondary" size="lg" block>
+                            SAVE FOR LATER
+                          </Button>
+                        </div>
+                      </div>
+                    </Col>
                   </Row>
-                </div>
+                </Col>
               </Row>
             );
           })}
 
-        <div style={{ borderTop: "4px solid black" }}>
+        <div style={{ borderTop: "1px solid rgba(0,0,0,.125)" }}>
           <p class="total">Total Price: ${this.calculateTotalPrice()}</p>
         </div>
       </Container>
