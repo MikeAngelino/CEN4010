@@ -34,7 +34,7 @@ const App = () => (
         {/* Link TITLE with home Page*/}
         <NavLink to="/" style={{ textDecoration: "none" }}>
           <h1>
-            <i class="material-icons">menu_book</i> GeekText
+            <i class="material-icons">menu_book</i> GeekText forever
           </h1>
         </NavLink>
 
