@@ -6,6 +6,10 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const config = require("config");
+// const PORT = process.env.PORT || 8080 //step 1
+// Port for DB
+const port = process.env.PORT || 3002;
+// app.listen(port, () => console.log(`Server started on ${port}`));
 
 // Express instance
 const app = express();
@@ -19,7 +23,8 @@ const db = config.get("mongoURI");
 
 // Connect to DB (Mongo)
 mongoose
-  .connect(db, {
+    //process.env for heroku step 2
+  .connect( process.env.MONGODB_URL || db, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -36,8 +41,18 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/Comments", require("./routes/api/Comments"));
 app.use("/api/wishlists", require("./routes/api/wishlist"));
 app.use("/api/carts", require("./routes/api/cart"));
+ 
+//step 3
+if (process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 // Port for DB
-const port = process.env.PORT || 3002;
+// const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`Server started on ${port}`));
 
 app.use(express.static(path.join(__dirname, "../..", "build")));

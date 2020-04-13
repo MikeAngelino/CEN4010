@@ -4,8 +4,6 @@ import CommentForm from "../components/Comments/CommentForm";
 import Rating from "./Rating";
 import StarRatings from "react-star-ratings";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
-import {Link} from 'react-router-dom';
-
 
 //useful for when you make calls to the api -- helps open a gateway to collect information
 import axios from "axios";
@@ -137,12 +135,7 @@ class BookDetails extends React.Component {
           <Col className="details-Basics">
             <h1>{this.state.book.title}</h1>
 
-              <Link to={`/Author/${this.state.book.authors}`}>
-               <h3 className="center-it">
-                 {this.state.book.authors}
-               </h3>
-               </Link>
-
+            <h3>{this.state.book.authors}</h3>
             <hr />
             <h2>{this.state.book.price}</h2>
 

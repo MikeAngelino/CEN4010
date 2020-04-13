@@ -32,7 +32,7 @@ render(){
                   <div className="flexbox-item flexbox-item-3">
                     <img className="fit-container" src={book.thumbnailUrl}/>
                   </div>
-                  <h3>{book.title}</h3>
+                  <h5>{book.title}</h5>
                   <p>by {book.authors}</p>
                   <p>Genre: {book.genre}</p>
                   <p>Price: {book.price}</p>

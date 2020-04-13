@@ -1,6 +1,7 @@
 import { ADD_WISHLIST, GET_WISHLIST, DELETE_WISHLIST } from "./types";
 import axios from "axios";
 
+
 export const addToWishList = (data) => async (dispatch) => {
   const res = await axios.post("http://localhost:3002/api/wishlists", {
     data,

@@ -55,7 +55,7 @@ const App = () => (
          		 <button type="submit">Submit</button> */}
           
           <li>
-            <NavLink to="/TopSel">Top Seller</NavLink>
+            <NavLink to="/TopSel">Google Search</NavLink>
           </li>
 
           <li>
